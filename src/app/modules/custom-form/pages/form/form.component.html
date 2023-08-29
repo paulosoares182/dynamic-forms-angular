@@ -1,0 +1,55 @@
+<section *ngIf="customForm">
+    <!-- HEADER -->
+    <header>
+        <h1>{{customForm.title}}</h1>
+        <h2>{{customForm.subTitle}}</h2>
+    </header>
+    <!-- FORM -->
+    <form *ngIf="form" [formGroup]="form">
+        <div class="row" *ngFor="let property of customForm.properties" [ngSwitch]="property.fieldType">
+            <!-- DISPLAY -->
+            <label class="display" for="{{property.name}}">{{ property.display }} <span *ngIf="property.required">*</span></label>
+            
+            <!-- TEXT -->
+            <input *ngSwitchCase="1" type="text" formControlName="{{property.name}}" />
+            <!-- TEXTAREA -->
+            <textarea *ngSwitchCase="2" formControlName="{{property.name}}"></textarea>
+            <!-- DROPDOWN -->
+            <select *ngSwitchCase="3" formControlName="{{property.name}}">
+                <option *ngFor="let item of property.items ?? []" value="{{item.value}}">{{item.display}}</option>
+            </select>
+            <!-- CHECKBOX -->
+            <label class="label-checkbox" *ngSwitchCase="4">
+                <input type="checkbox" formControlName="{{property.name}}" />
+                {{property.subText}}
+            </label>
+            <!-- RADIOBUTTON -->
+
+            <div *ngSwitchCase="5">
+                <form *ngIf="getGroup(property.name) as group" [formGroupName]="property.name">
+                    <div *ngFor="let item of property.items ?? []">
+                        <label>
+                            <input type="radio" formControlName="{{property.name}}" value="{{item.value}}" />
+                            {{item.display}}
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ERROS -->
+            <small *ngIf="hasRequiredError(property.name)">
+                Field <span>{{property.display}}</span> is required
+            </small>
+            <small *ngIf="hasPatternError(property.name)">
+                <span>{{property.invalidMessage}}</span>
+            </small>
+        </div>
+        <div class="actions">
+            <button type="submit" (click)="onSubmit()" [ngSwitch]="hasNext()" [disabled]="!form.valid">
+                <span *ngSwitchCase="true">Next</span>
+                <span *ngSwitchCase="false">Finalizar</span>
+            </button>
+            <button (click)="reset()">Reset</button>
+        </div>
+    </form>
+</section>
