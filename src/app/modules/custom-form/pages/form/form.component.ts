@@ -12,8 +12,8 @@ import { FormBase } from 'src/app/shared/common/form-base';
 export class FormComponent extends FormBase implements OnInit {
   constructor(formBuilder: FormBuilder) {
     let customForm: ICustomForm = {
-      title: "1. Personal",
-      subTitle: "Fill in your personal details.",
+      title: "1st Step",
+      subTitle: "Personal Details",
       properties: [
         // {
         //   name: "id",

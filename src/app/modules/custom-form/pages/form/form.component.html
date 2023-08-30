@@ -2,7 +2,7 @@
     <!-- HEADER -->
     <header>
         <h1>{{customForm.title}}</h1>
-        <h2>{{customForm.subTitle}}</h2>
+        <h3>{{customForm.subTitle}}</h3>
     </header>
     <!-- FORM -->
     <form *ngIf="form" [formGroup]="form">
@@ -19,7 +19,7 @@
                 <option *ngFor="let item of property.items ?? []" value="{{item.value}}">{{item.display}}</option>
             </select>
             <!-- CHECKBOX -->
-            <label class="label-checkbox" *ngSwitchCase="4">
+            <label class="label-flex" *ngSwitchCase="4">
                 <input type="checkbox" formControlName="{{property.name}}" />
                 {{property.subText}}
             </label>
