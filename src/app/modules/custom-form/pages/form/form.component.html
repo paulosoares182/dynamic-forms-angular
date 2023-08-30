@@ -24,7 +24,6 @@
                 {{property.subText}}
             </label>
             <!-- RADIOBUTTON -->
-
             <div *ngSwitchCase="5">
                 <form *ngIf="getGroup(property.name) as group" [formGroupName]="property.name">
                     <div *ngFor="let item of property.items ?? []">
@@ -35,8 +34,12 @@
                     </div>
                 </form>
             </div>
+            <!-- DATEONLY -->
+            <input *ngSwitchCase="6" type="date" formControlName="{{property.name}}" />
+            <!-- DATETIME -->
+            <input *ngSwitchCase="7" type="datetime-local" formControlName="{{property.name}}" />
 
-            <!-- ERROS -->
+            <!-- ERROR -->
             <small *ngIf="hasRequiredError(property.name)">
                 Field <span>{{property.display}}</span> is required
             </small>

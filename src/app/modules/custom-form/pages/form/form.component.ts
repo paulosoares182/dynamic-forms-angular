@@ -15,15 +15,15 @@ export class FormComponent extends FormBase implements OnInit {
       title: "1. Personal",
       subTitle: "Fill in your personal details.",
       properties: [
-        {
-          name: "id",
-          display: "Id",
-          defaultValue: "",
-          fieldType: FieldType.TEXT,
-          pattern: "^[0-9]+$",
-          invalidMessage: "Invalid Id.",
-          required: true
-        },
+        // {
+        //   name: "id",
+        //   display: "Id",
+        //   defaultValue: "",
+        //   fieldType: FieldType.TEXT,
+        //   pattern: "^[0-9]+$",
+        //   invalidMessage: "Invalid Id.",
+        //   required: true
+        // },
         {
           name: "fullName",
           display: "Full Name",
@@ -34,12 +34,21 @@ export class FormComponent extends FormBase implements OnInit {
           required: true
         },
         {
-          name: "age",
-          display: "Age",
-          defaultValue: "M",
+          name: "document",
+          display: "Document Number",
+          defaultValue: "",
           fieldType: FieldType.TEXT,
-          pattern: "^[0-9]{2}$",
-          invalidMessage: "Invalid Age.",
+          pattern: "^[0-9]{9,11}$",
+          invalidMessage: "Invalid Document.",
+          required: true
+        },
+        {
+          name: "birthDate",
+          display: "Birth Date",
+          defaultValue: "",
+          fieldType: FieldType.DATEONLY,
+          pattern: "^(19[4-9]{1}[0-9]{1}|200[0-6]{1})-(0[0-9]{1}|1[0-2]{1})-([0-2]{1}[0-9]{1}|[3[0-1]{1})$",
+          invalidMessage: "Invalid Birth Date.",
           required: true
         },
         {
@@ -93,7 +102,7 @@ export class FormComponent extends FormBase implements OnInit {
     let content = {
       id: "0001",
       fullName: "John Doe",
-      age: "14"
+      document: "12345678900"
     }
 
     super(formBuilder, customForm, content)
