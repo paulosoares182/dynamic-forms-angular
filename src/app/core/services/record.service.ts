@@ -1,19 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { FieldType } from 'src/app/core/enums/field-type.enum';
-import { ICustomForm } from 'src/app/core/models/custom-form.model';
-import { FormBase } from 'src/app/shared/common/form-base';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { ICustomForm } from '../models/custom-form.model';
+import { FieldType } from '../enums/field-type.enum';
 
-@Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+@Injectable({
+  providedIn: 'root'
 })
-export class FormComponent extends FormBase implements OnInit {
-  constructor(formBuilder: FormBuilder) {
-    let customForm: ICustomForm = {
+export class RecordService {
+
+  constructor() { }
+
+  getCustomForm(record: string): Observable<ICustomForm | null> {
+    switch(record) {
+      case "personal": return of(this.getPersonal());
+      case "foobar": return of(this.getFooBar());
+    }
+
+    return of(null);
+  }
+
+  private getPersonal(): ICustomForm {
+    return {
       title: "1st Step",
       subTitle: "Personal Details",
+      next: "foobar",
       properties: [
         // {
         //   name: "id",
@@ -98,33 +108,32 @@ export class FormComponent extends FormBase implements OnInit {
         }
       ]
     }
+  }
 
-    let content = {
-      id: "0001",
-      fullName: "John Doe",
-      document: "12345678900"
+  private getFooBar(): ICustomForm {
+    return {
+      title: "2st Step",
+      subTitle: "Foo bar",
+      properties: [
+        {
+          name: "foo",
+          display: "Foo",
+          defaultValue: "",
+          fieldType: FieldType.TEXT,
+          pattern: "[^\n]",
+          invalidMessage: "Invalid Foo.",
+          required: true
+        },
+        {
+          name: "bar",
+          display: "Bar",
+          defaultValue: "",
+          fieldType: FieldType.TEXT,
+          pattern: "[^\n]",
+          invalidMessage: "Invalid Bar.",
+          required: true
+        }
+      ]
     }
-
-    super(formBuilder, customForm, content)
-  }
-
-  ngOnInit(): void {
-    this.buildForm();
-  }
-
-  override onSubmit(): void {
-    console.log(this.mapper())
-    console.log(this.form)
-    this.onSuccessfullySubmitted()
-  }
-
-  override onSuccessfullySubmitted(): void {
-    if (this.hasNext()) {
-      console.log(`Redirect to ${this.customForm.next}`)
-    }
-  }
-
-  override onFailureSubmitted(): void {
-
   }
 }

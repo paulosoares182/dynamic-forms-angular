@@ -1,19 +1,22 @@
+import { Component, Input } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from "@angular/forms";
 import { FieldType } from "src/app/core/enums/field-type.enum";
 import { ICustomForm } from "src/app/core/models/custom-form.model";
 import { IFormProperty } from "src/app/core/models/form-property.model";
 
+@Component({
+    template: ''
+})
 export abstract class FormBase {
+    @Input({ required: true }) customForm!: ICustomForm;
+    @Input() record?: any;
+
     public form?: FormGroup;
-    public content?: any
-    public customForm: ICustomForm
     public title?: string;
     public subTitle?: string;
 
-    constructor(private formBuilder: FormBuilder, customForm: ICustomForm, content: any) {
-        this.customForm = customForm
-        this.content = content
-    }
+    constructor(private formBuilder: FormBuilder) { }
+    
     abstract onSubmit(): void;
     abstract onSuccessfullySubmitted(): void;
     abstract onFailureSubmitted(): void;
@@ -38,9 +41,6 @@ export abstract class FormBase {
         }
 
         this.form = this.formBuilder.group(fields);
-
-        // console.log(this.customForm)
-        // console.log(fields)
     }
 
     protected getGroup(controlName: string): FormGroup | null {
@@ -58,15 +58,15 @@ export abstract class FormBase {
             return null;
         }
 
-        this.content ??= {};
+        this.record ??= {};
 
         Object.keys(this.form.controls).forEach(key => {
             const group = this.getGroup(key);
             const value = group ? group.controls[key].value : this.form!.controls[key].value;
-            this.content[key] = value;
+            this.record[key] = value;
         });
 
-        return this.content;
+        return this.record;
     }
 
     protected reset(): void {
@@ -110,7 +110,7 @@ export abstract class FormBase {
     }
 
     private getValue(property: IFormProperty): any {
-        let value = this.content[property.name];
+        let value = this.record ? this.record[property.name] : null;
 
         if (!value && property.required) {
             value = property.defaultValue;
