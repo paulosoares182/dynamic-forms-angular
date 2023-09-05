@@ -1,6 +1,7 @@
 import { IFormProperty } from "./form-property.model";
 
 export interface ICustomForm {
+    name?: string
     title: string
     subTitle: string
     next?: string

@@ -1,0 +1,99 @@
+<main *ngIf="form">
+    <header>
+        <h1>Create Form</h1>
+    </header>
+    <form [formGroup]="form">
+        <div class="separator"><span>Header</span></div>
+
+        <section class="form-header">
+            <!-- Name -->
+            <div class="input-group">
+                <label>Name</label>
+                <input type="text" formControlName="name" />
+            </div>
+            <!-- Title -->
+            <div class="input-group">
+                <label>Title</label>
+                <input type="text" formControlName="title" />
+            </div>
+            <!-- SubTitle -->
+            <div class="input-group">
+                <label>SubTitle</label>
+                <input type="text" formControlName="subTitle" />
+            </div>
+            <!-- Next -->
+            <div class="input-group">
+                <label>Next</label>
+                <input type="text" formControlName="next" />
+            </div>
+        </section>
+
+        <div class="separator"><span>Properties</span></div>
+
+        <section class="form-content" formArrayName="properties">
+            <div *ngFor="let property of properties.controls; let i = index">
+                <div [formGroupName]="i">
+                    <!-- FieldType -->
+                    <div class="input-group">
+                        <label>Field type</label>
+                        <select *ngIf="types as types">
+                            <option *ngFor="let t of types" value="{{t.value}}">{{t.text}}</option>
+                        </select>
+                    </div>
+                    <!-- Name -->
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" formControlName="name" />
+                    </div>
+                    <!-- Display -->
+                    <div class="input-group">
+                        <label>Display</label>
+                        <input type="text" formControlName="display" />
+                    </div>
+                    <!-- SubText -->
+                    <div class="input-group">
+                        <label>SubText</label>
+                        <input type="text" formControlName="subText" />
+                    </div>
+                    <!-- DefaultValue -->
+                    <div class="input-group">
+                        <label>Default value</label>
+                        <input type="text" formControlName="defaultValue" />
+                    </div>
+                    <!-- Pattern -->
+                    <div class="input-group">
+                        <label>Pattern</label>
+                        <input type="text" formControlName="pattern" />
+                    </div>
+                    <!-- InvalidMessage -->
+                    <div class="input-group">
+                        <label>Invalid message</label>
+                        <input type="text" formControlName="invalidMessage" />
+                    </div>
+                    <!-- Required -->
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" formControlName="required" />
+                            Required
+                        </label>
+                    </div>
+                    <!-- Items -->
+                    <div *ngFor="let item of castFormArray(property.get('items')).controls; let j = index">
+                        <div [formGroupName]="j">
+                            <div>
+                                <input type="text" formControlName="display" placeholder="Display" />
+                                <input type="text" formControlName="value" placeholder="Value" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button (click)="addPropertyItem(property)">Add Item</button>
+                </div>
+            </div>
+            <button (click)="addProperty()">Add Property</button>
+        </section>
+
+        <!-- ACTIONS -->
+        <button type="submit" (click)="onSubmit()">Save</button>
+    </form>
+</main>
