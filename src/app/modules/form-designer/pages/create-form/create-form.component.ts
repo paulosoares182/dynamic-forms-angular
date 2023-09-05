@@ -37,8 +37,8 @@ export class CreateFormComponent {
       });
   }
 
-  castFormArray(control: any): FormArray {
-    return control as FormArray;
+  getFormArray(form: any, controlArray: string): FormArray {
+    return form.controls[controlArray] as FormArray;
   }
 
   addProperty(): void {
@@ -67,15 +67,15 @@ export class CreateFormComponent {
     if (!this.form) return;
 
     const item = this.formBuilder.group({
-      display: ['display', Validators.required],
-      value: ['value', Validators.required],
+      display: [null, Validators.required],
+      value: [null, Validators.required],
     });
 
-    (property.get("items") as FormArray).push(item);
+    (property.controls["items"] as FormArray).push(item);
   }
 
   deleteItem(property: any, index: number): void {
-    (property.get("items") as FormArray).removeAt(index);
+    (property.controls["items"] as FormArray).removeAt(index);
   }
 
   onSubmit(): void {

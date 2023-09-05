@@ -3,9 +3,8 @@
         <h1>Create Form</h1>
     </header>
     <form [formGroup]="form">
-        <div class="separator"><span>Header</span></div>
-
-        <section class="form-header">
+        <fieldset class="form-header">
+            <legend>Header</legend>
             <!-- Name -->
             <div class="input-group">
                 <label>Name</label>
@@ -26,12 +25,12 @@
                 <label>Next</label>
                 <input type="text" formControlName="next" />
             </div>
-        </section>
+        </fieldset>
 
-        <div class="separator"><span>Properties</span></div>
-
-        <section class="form-content" formArrayName="properties">
+        <fieldset class="form-content" formArrayName="properties">
+            <legend>Fields</legend>
             <div *ngFor="let property of properties.controls; let i = index">
+                <div class="separator"><span>{{property.get('display')?.value}}</span></div>
                 <div [formGroupName]="i">
                     <!-- FieldType -->
                     <div class="input-group">
@@ -78,20 +77,25 @@
                         </label>
                     </div>
                     <!-- Items -->
-                    <div *ngFor="let item of castFormArray(property.get('items')).controls; let j = index">
-                        <div [formGroupName]="j">
-                            <div>
-                                <input type="text" formControlName="display" placeholder="Display" />
-                                <input type="text" formControlName="value" placeholder="Value" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <button (click)="addPropertyItem(property)">Add Item</button>
+                    <fieldset>
+                        <legend>Items</legend>
+                        <ul formArrayName="items">
+                            <li *ngFor="let item of getFormArray(property, 'items').controls; let j = index">
+                                <div [formGroupName]="j">
+                                    <div>
+                                        <input type="text" formControlName="display" placeholder="Display" />
+                                        <input type="text" formControlName="value" placeholder="Value" />
+                                        <button (click)="deleteItem(property, j)">Delete</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <button (click)="addPropertyItem(property)">Add Item</button>
+                    </fieldset>
                 </div>
             </div>
             <button (click)="addProperty()">Add Property</button>
-        </section>
+        </fieldset>
 
         <!-- ACTIONS -->
         <button type="submit" (click)="onSubmit()">Save</button>

@@ -2,7 +2,6 @@ main {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
     align-items: center;
 
     header {
@@ -38,7 +37,7 @@ main {
         }
     }
 
-    section {
+    .form-header, .form-content {
         display: flex;
         flex-direction: column;
         margin: 12px 0;
@@ -49,5 +48,12 @@ main {
         }
     }
 
-    .form-header {}
+    fieldset {
+        border: 1px solid black;
+        padding: 6px;
+
+        legend {
+            font-weight: bold;
+        }
+    }
 }
