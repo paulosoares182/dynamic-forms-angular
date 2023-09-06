@@ -1,0 +1,129 @@
+{
+    "custom_forms": [
+        {
+            "id": 1,
+            "name": "personal",
+            "title": "1st Step",
+            "subTitle": "Personal Details",
+            "next": "foobar",
+            "properties": [
+                {
+                    "name": "fullName",
+                    "display": "Full Name",
+                    "defaultValue": "",
+                    "fieldType": 1,
+                    "pattern": "[^\n]{3,}",
+                    "invalidMessage": "Invalid Name.",
+                    "required": true
+                },
+                {
+                    "name": "document",
+                    "display": "Document Number",
+                    "defaultValue": "",
+                    "fieldType": 1,
+                    "pattern": "^[0-9]{9,11}$",
+                    "invalidMessage": "Invalid Document.",
+                    "required": true
+                },
+                {
+                    "name": "birthDate",
+                    "display": "Birth Date",
+                    "defaultValue": "",
+                    "fieldType": 6,
+                    "pattern": "^(19[4-9]{1}[0-9]{1}|200[0-6]{1})-(0[0-9]{1}|1[0-2]{1})-([0-2]{1}[0-9]{1}|[3[0-1]{1})$",
+                    "invalidMessage": "Invalid Birth Date.",
+                    "required": true
+                },
+                {
+                    "name": "gender",
+                    "display": "Gender",
+                    "defaultValue": "",
+                    "fieldType": 3,
+                    "pattern": "^(M|F|O|N)$",
+                    "invalidMessage": "Invalid Gender.",
+                    "required": false,
+                    "items": [
+                        {
+                            "value": "M",
+                            "display": "Male"
+                        },
+                        {
+                            "value": "F",
+                            "display": "Female"
+                        },
+                        {
+                            "value": "O",
+                            "display": "Other"
+                        },
+                        {
+                            "value": "N",
+                            "display": "None"
+                        }
+                    ]
+                },
+                {
+                    "name": "observation",
+                    "display": "Observation",
+                    "defaultValue": "",
+                    "fieldType": 2,
+                    "pattern": "",
+                    "invalidMessage": "Invalid Observation.",
+                    "required": false
+                },
+                {
+                    "name": "notify",
+                    "display": "Notify?",
+                    "defaultValue": "",
+                    "fieldType": 5,
+                    "invalidMessage": "Invalid Notify.",
+                    "required": true,
+                    "items": [
+                        {
+                            "value": "true",
+                            "display": "Yes, I want to be notified by email."
+                        },
+                        {
+                            "value": "false",
+                            "display": "I do not wish to receive notifications."
+                        }
+                    ]
+                },
+                {
+                    "name": "acceptTerms",
+                    "display": "Accept Terms",
+                    "subText": "I agree with the terms.",
+                    "defaultValue": "",
+                    "fieldType": 4,
+                    "invalidMessage": "Invalid Accept Terms.",
+                    "required": true
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "foobar",
+            "title": "2st Step",
+            "subTitle": "Foo bar",
+            "properties": [
+                {
+                    "name": "foo",
+                    "display": "Foo",
+                    "defaultValue": "",
+                    "fieldType": 1,
+                    "pattern": "[^\n]",
+                    "invalidMessage": "Invalid Foo.",
+                    "required": true
+                },
+                {
+                    "name": "bar",
+                    "display": "Bar",
+                    "defaultValue": "",
+                    "fieldType": 1,
+                    "pattern": "[^\n]",
+                    "invalidMessage": "Invalid Bar.",
+                    "required": true
+                }
+            ]
+        }
+    ]
+}
