@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ICustomForm } from 'src/app/core/models/custom-form.model';
 import { RecordService } from 'src/app/core/services/record.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-record',
@@ -10,8 +10,6 @@ import { RecordService } from 'src/app/core/services/record.service';
   styleUrls: ['./record.component.scss']
 })
 export class RecordComponent implements OnInit {
-  destroyRef = inject(DestroyRef)
-  
   customForm: ICustomForm | null = null
   record?: any
 
@@ -23,7 +21,7 @@ export class RecordComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.refresh();
-      this.load(params["record"]);
+      this.load(params["formName"]);
     });
   }
 
@@ -32,9 +30,9 @@ export class RecordComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
   }
 
-  load(record: string): void {
-    this.service.getCustomForm(record).pipe(
-      takeUntilDestroyed(this.destroyRef)
+  load(formName: string): void {
+    this.service.getCustomForm(formName).pipe(
+      take(1)
     ).subscribe(payload => {
       this.customForm = payload;
     })

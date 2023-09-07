@@ -10,10 +10,10 @@ export class RecordService {
 
   constructor(private http: HttpClient) { }
 
-  getCustomForm(record: string): Observable<ICustomForm | null> {
-    return this.http.get<ICustomForm[] | null>(`http://localhost:3000/custom_forms`)
+  getCustomForm(formName: string): Observable<ICustomForm | null> {
+    return this.http.get<any>(`http://localhost:3000/custom_forms?name=${formName}`)
       .pipe(
-        map(response => response?.find(r => r.name === record) ?? null)
-      )
+        map(payload => payload?.at(0) as ICustomForm)
+      );
   }
 }

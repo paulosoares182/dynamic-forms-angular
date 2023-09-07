@@ -4,7 +4,7 @@ import { RecordComponent } from './pages/record/record.component';
 
 const routes: Routes = [
   {
-    path: ':record', component: RecordComponent, children: []
+    path: ':formName', component: RecordComponent, children: []
   }
 ];
 
@@ -12,4 +12,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CustomFormRoutingModule { }
+export class RecordRoutingModule { }

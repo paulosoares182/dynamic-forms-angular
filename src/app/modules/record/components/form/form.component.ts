@@ -17,7 +17,6 @@ export class FormComponent extends FormBase implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("form")
     this.buildForm();
   }
 
