@@ -80,7 +80,7 @@
                     <fieldset>
                         <legend>Items</legend>
                         <ul formArrayName="items">
-                            <li *ngFor="let item of getFormArray(property, 'items').controls; let j = index">
+                            <li *ngFor="let _ of (property.get('items') | formArray).controls; let j = index">
                                 <div [formGroupName]="j">
                                     <div>
                                         <input type="text" formControlName="display" placeholder="Display" />

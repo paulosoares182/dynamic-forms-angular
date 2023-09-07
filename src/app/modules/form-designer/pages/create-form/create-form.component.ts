@@ -37,10 +37,6 @@ export class CreateFormComponent {
       });
   }
 
-  getFormArray(form: any, controlArray: string): FormArray {
-    return form.controls[controlArray] as FormArray;
-  }
-
   addProperty(): void {
     if (!this.form) return;
 
