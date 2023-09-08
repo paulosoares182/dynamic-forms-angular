@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FieldType } from 'src/app/core/enums/field-type.enum';
 import { ICustomForm } from 'src/app/core/models/custom-form.model';
+import { FormBase } from 'src/app/shared/common/form-base';
 
 @Component({
   selector: 'app-create-form',
   templateUrl: './create-form.component.html',
   styleUrls: ['./create-form.component.scss']
 })
-export class CreateFormComponent {
-  form: FormGroup | null = null;
+export class CreateFormComponent extends FormBase implements OnInit {
+  formBuilder = inject(FormBuilder);
 
   get properties() {
     return this.form?.controls["properties"] as FormArray;
@@ -19,14 +20,14 @@ export class CreateFormComponent {
     return this.enumToArray(FieldType)
   }
 
-  constructor(private formBuilder: FormBuilder) {
+  ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(/^[a-z\-]$/)]],
       title: [null, [Validators.required]],
       subTitle: [null, [Validators.required]],
       next: [null, [Validators.pattern(/^[a-z\-]$/)]],
       properties: this.formBuilder.array([])
-    });
+    }); 
   }
 
   enumToArray(enumme: any) {
@@ -75,6 +76,14 @@ export class CreateFormComponent {
   }
 
   onSubmit(): void {
+    this.onSuccessfullySubmitted()
+  }
+
+  override onSuccessfullySubmitted(): void {
     console.log(this.form?.value as ICustomForm)
+  }
+
+  override onFailureSubmitted(): void {
+    
   }
 }
