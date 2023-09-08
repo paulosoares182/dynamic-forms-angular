@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ICustomForm } from '../models/custom-form.model';
 import { HttpClient } from '@angular/common/http'
@@ -7,13 +7,26 @@ import { HttpClient } from '@angular/common/http'
   providedIn: 'root'
 })
 export class RecordService {
+  http = inject(HttpClient);
+  
+  url: string = "http://localhost:3000/custom_forms";
 
-  constructor(private http: HttpClient) { }
+  createCustomForm(form: ICustomForm): Observable<ICustomForm> {
+    return this.http.post<ICustomForm>(this.url, form);
+  }
+
+  updateCustomForm(form: ICustomForm): Observable<ICustomForm> {
+    return this.http.put<ICustomForm>(`${this.url}/${form.id}`, form);
+  }
+
+  getCustomFormById(id: number): Observable<ICustomForm | null> {
+    return this.http.get<ICustomForm | null>(`${this.url}/${id}`)
+  }
 
   getCustomForm(formName: string): Observable<ICustomForm | null> {
-    return this.http.get<any>(`http://localhost:3000/custom_forms?name=${formName}`)
+    return this.http.get<any>(`${this.url}?name=${formName}`)
       .pipe(
-        map(payload => payload?.at(0) as ICustomForm)
+        map(response => response?.at(0) as ICustomForm)
       );
   }
 }

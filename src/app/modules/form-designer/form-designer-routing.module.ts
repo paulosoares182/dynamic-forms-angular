@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateFormComponent } from './pages/create-form/create-form.component';
 
 const routes: Routes = [
-  { path: 'new', component: CreateFormComponent, children: [] },
+  { path: 'new', component: CreateFormComponent },
+  { path: 'edit/:id', component: CreateFormComponent },
   { path: '', redirectTo: 'new', pathMatch: 'full' }
 ];
 

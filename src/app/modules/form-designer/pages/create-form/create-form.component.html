@@ -35,8 +35,8 @@
                     <!-- FieldType -->
                     <div class="input-group">
                         <label>Field type</label>
-                        <select *ngIf="types as types">
-                            <option *ngFor="let t of types" value="{{t.value}}">{{t.text}}</option>
+                        <select formControlName="fieldType">
+                            <option *ngFor="let t of fieldTypes" value="{{t.value}}">{{t.text}}</option>
                         </select>
                     </div>
                     <!-- Name -->
@@ -98,6 +98,6 @@
         </fieldset>
 
         <!-- ACTIONS -->
-        <button type="submit" (click)="onSubmit()">Save</button>
+        <button type="submit" (click)="onSubmit()" [disabled]="!form.valid">Save</button>
     </form>
 </main>
